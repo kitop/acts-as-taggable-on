@@ -58,7 +58,7 @@ module ActsAsTaggableOn
 
       return [] if list.empty?
 
-      existing_tags = Tag.named_any(list).all
+      existing_tags = Tag.named_any(list).load
       new_tag_names = list.reject do |name|
         name = comparable_name(name)
         existing_tags.any? { |tag| comparable_name(tag.name) == name }

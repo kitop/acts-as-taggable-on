@@ -256,7 +256,7 @@ module ActsAsTaggableOn::Taggable
           scope = scope.group("#{ActsAsTaggableOn::Tag.table_name}.#{ActsAsTaggableOn::Tag.primary_key}")
         end
 
-        scope.all
+        scope.load
       end
 
       ##
@@ -266,7 +266,7 @@ module ActsAsTaggableOn::Taggable
         # when preserving tag order, return tags in created order
         # if we added the order to the association this would always apply
         scope = scope.order("#{ActsAsTaggableOn::Tagging.table_name}.id") if self.class.preserve_tag_order?
-        scope.all
+        scope.load
       end
 
       def set_tag_list_on(context, new_list)
@@ -336,7 +336,7 @@ module ActsAsTaggableOn::Taggable
           # Find taggings to remove:
           if old_tags.present?
             old_taggings = taggings.where(:tagger_type => nil, :tagger_id => nil,
-                                          :context => context.to_s, :tag_id => old_tags).all
+                                          :context => context.to_s, :tag_id => old_tags).load
           end
 
           # Destroy old taggings:
