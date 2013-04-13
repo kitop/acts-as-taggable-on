@@ -24,7 +24,7 @@ module ActsAsTaggableOn::Taggable
           class_eval do
             # when preserving tag order, include order option so that for a 'tags' context
             # the associations tag_taggings & tags are always returned in created order
-            has_many context_taggings, ->{ includes(:tag).order(taggings_order) },
+            has_many context_taggings, ->{ joins(:tag).order(taggings_order) },
                                        :as => :taggable,
                                        :dependent => :destroy,
                                        :class_name => "ActsAsTaggableOn::Tagging",
