@@ -80,7 +80,7 @@ module ActsAsTaggableOn::Taggable
       #   User.tagged_with("awesome", "cool", :owned_by => foo ) # Users that are tagged with just awesome and cool by 'foo'
       def tagged_with(tags, options = {})
         tag_list = ActsAsTaggableOn::TagList.from(tags)
-        empty_result = scoped(:conditions => "1 = 0")
+        empty_result = where("1 = 0")
 
         return empty_result if tag_list.empty?
 
@@ -109,7 +109,7 @@ module ActsAsTaggableOn::Taggable
             tags = ActsAsTaggableOn::Tag.named_any(tag_list)
           end
 
-          return scoped(:conditions => "1 = 0") unless tags.length > 0
+          return where("1 = 0") unless tags.length > 0
 
           # setup taggings alias so we can chain, ex: items_locations_taggings_awesome_cool_123
           # avoid ambiguous column name
